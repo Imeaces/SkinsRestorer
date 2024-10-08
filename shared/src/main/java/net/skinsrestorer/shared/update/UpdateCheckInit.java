@@ -43,6 +43,10 @@ public class UpdateCheckInit {
     }
 
     public void run(InitCause cause) {
+        boolean updaterDisabled = Files.exists(plugin.getDataFolder().resolve("noupdate.txt"));
+        if (updaterDisabled){
+            return;
+        }
         UpdateDownloader downloader = getDownloader().orElse(null);
         updateCheckExecutor.checkUpdate(cause.toUpdateCause(), updateChecker, downloader, true);
 
